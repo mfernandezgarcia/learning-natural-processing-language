@@ -6,13 +6,11 @@
     en la interacción con las personas a través del lenguaje natural.
 """
 
-
 """
     Tokenizar el texto. Sacamos las palabras clave del texto.
     - La tokenización es el proceso de dividir un texto en unidades más pequeñas, como palabras, frases u oraciones. En este ejemplo usamos
     word_tokenize para hacer la división en palabras.
 """
-
 
 # Instalar las tools que necesitamos dentro de nltk
 from nltk.stem import WordNetLemmatizer
@@ -28,11 +26,14 @@ nltk.download('tagsets')
 nltk.download("maxent_ne_chunker")
 nltk.download("words")
 
-example_string = """Muad'Dib learned rapidly because his first training was in how to learn. And the first lesson of all was the basic trust that he could learn. It's shocking to find how many people do not believe they can learn, and how many more believe learning to be difficult."""
+example_string = """No comas ajos ni cebollas, porque no saquen por el olor tu villanería."""
 tokenized_word = word_tokenize(example_string)
 
+print("\n\n---- PALABRAS TOKENIZADAS IGNORANDO LAS STOP WORDS ----\n\n")
+print(tokenized_word)
+
 # Stop words son las palabras que queremos ignorar
-stop_words = set(stopwords.words("english"))
+stop_words = set(stopwords.words("spanish"))
 
 filtered_list = []
 for word in tokenized_word:
@@ -57,7 +58,7 @@ print(filtered_list)
 """
 
 stemmer = PorterStemmer()
-stemmed_words = [stemmer.stem(word) for word in filtered_list]
+stemmed_words = [stemmer.stem(word) for word in tokenized_word]
 
 print("\n\n---- STEMMING ----\n\n")
 print(stemmed_words)
@@ -154,7 +155,7 @@ print("\n\n---- NAMED ENTITY RECOGNITION ----\n\n")
 # tree4.draw()
 
 
-def extract_named_entities(quote, language="english"):
+def extract_named_entities(quote, language="spanish"):
     words = word_tokenize(quote, language=language)
     tags = nltk.pos_tag(words)
     tree = nltk.ne_chunk(tags, binary=True)
